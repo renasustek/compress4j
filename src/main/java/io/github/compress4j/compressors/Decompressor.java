@@ -15,11 +15,13 @@
  */
 package io.github.compress4j.compressors;
 
+import org.apache.commons.compress.compressors.CompressorInputStream;
+
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import org.apache.commons.compress.compressors.CompressorInputStream;
 
 /**
  * This abstract class is the superclass of all classes providing decompression.
@@ -40,6 +42,9 @@ public abstract class Decompressor<I extends CompressorInputStream> implements A
         this.compressorInputStream = compressorInputStream;
     }
 
+    protected <B extends Decompressor.DecompressorBuilder<I, D, B>, D extends Decompressor<I>> Decompressor(B builder)
+            throws IOException {
+        this(builder.buildCompressorInputStream());
     /**
      * Create a new Decompressor with the given input stream and options.
      *
@@ -95,11 +100,13 @@ public abstract class Decompressor<I extends CompressorInputStream> implements A
             D extends Decompressor<I>,
             B extends Decompressor.DecompressorBuilder<I, D, B>> {
 
-        protected final I compressorInputStream;
+        protected final InputStream inputStream;
 
-        protected DecompressorBuilder(I compressorInputStream) {
-            this.compressorInputStream = compressorInputStream;
+        protected DecompressorBuilder(InputStream inputStream) {
+            this.inputStream = inputStream;
         }
+
+        public abstract I buildCompressorInputStream() throws IOException;
 
         protected abstract B getThis();
 
