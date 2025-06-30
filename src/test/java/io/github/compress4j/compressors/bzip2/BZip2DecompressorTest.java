@@ -15,35 +15,34 @@
  */
 package io.github.compress4j.compressors.bzip2;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.spy;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-import java.io.OutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-
 class BZip2DecompressorTest {
     @Test
     void shouldWritePathEntry() throws Exception {
-        //given
+        // given
         var inputStream = mock(BZip2CompressorInputStream.class);
 
         Path path = mock(Path.class);
 
-        //when
+        // when
 
         var aOut = spy(BZip2Decompressor.builder(inputStream));
         try (MockedStatic<Files> mockFiles = mockStatic(Files.class);
-             BZip2Decompressor compressor = new BZip2Decompressor(aOut)) {
+                BZip2Decompressor compressor = new BZip2Decompressor(aOut)) {
             compressor.write(path);
 
             // then
-            mockFiles.verify(() -> Files.copy(any(BZip2CompressorInputStream.class),any(Path.class)));
+            mockFiles.verify(() -> Files.copy(any(BZip2CompressorInputStream.class), any(Path.class)));
         }
-
     }
 }

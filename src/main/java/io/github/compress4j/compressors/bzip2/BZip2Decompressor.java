@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * https://www.apache.org/licenses/LICENSE-2.0
+ *     https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,11 +19,9 @@ import io.github.compress4j.compressors.Decompressor;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
 
 public class BZip2Decompressor extends Decompressor<BZip2CompressorInputStream> {
-
 
     protected BZip2Decompressor(BZip2CompressorInputStream inputStream) {
         super(inputStream);
@@ -38,15 +36,12 @@ public class BZip2Decompressor extends Decompressor<BZip2CompressorInputStream> 
     }
 
     public static BZip2DecompressorBuilder builder(Path path) throws IOException {
-        return new BZip2DecompressorBuilder( new BZip2CompressorInputStream(Files.newInputStream(path)));
+        return new BZip2DecompressorBuilder(new BZip2CompressorInputStream(Files.newInputStream(path)));
     }
 
     public static class BZip2DecompressorBuilder
             extends Decompressor.DecompressorBuilder<
-            BZip2CompressorInputStream,
-            BZip2Decompressor,
-            BZip2DecompressorBuilder
-            > {
+                    BZip2CompressorInputStream, BZip2Decompressor, BZip2DecompressorBuilder> {
 
         public BZip2DecompressorBuilder(BZip2CompressorInputStream inputStream) {
             super(inputStream);
@@ -54,7 +49,6 @@ public class BZip2Decompressor extends Decompressor<BZip2CompressorInputStream> 
 
         public BZip2DecompressorBuilder(Path path) throws IOException {
             super((BZip2CompressorInputStream) Files.newInputStream(path));
-
         }
 
         @Override
